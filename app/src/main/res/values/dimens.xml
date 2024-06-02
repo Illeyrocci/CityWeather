@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="side_margin">16dp</dimen>
+    <dimen name="between_text_button">42dp</dimen>
+    <dimen name="top_main_margin">40dp</dimen>
+    <dimen name="bottom_main_margin">36dp</dimen>
+    <dimen name="progress_bar">48dp</dimen>
+    <dimen name="vertical_margin">8dp</dimen>
+    <dimen name="label_width">40dp</dimen>
+    <dimen name="city_height">40dp</dimen>
+    <dimen name="medium_text_size">24dp</dimen>
+    <dimen name="regular_text_size">16sp</dimen>
+
+    <dimen name="error_baseline_to_top">17sp</dimen>
+    <dimen name="error_baseline_to_bottom">3sp</dimen>
+    <dimen name="error_text_size">14sp</dimen>
+
+    <dimen name="celsius_baseline_to_top">60sp</dimen>
+    <dimen name="celsius_baseline_to_bottom">4sp</dimen>
+    <dimen name="celsius_text_size">57sp</dimen>
+
+    <dimen name="city_baseline_to_top">36sp</dimen>
+    <dimen name="city_baseline_to_bottom">4sp</dimen>
+    <dimen name="city_text_size">32sp</dimen>
+</resources>

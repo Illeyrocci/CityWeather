@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CityWeather</string>
+    <string name="temperature">%1$d\u2103</string>
+</resources>
