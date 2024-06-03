@@ -18,6 +18,7 @@ import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListViewM
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 class CityListFragment : Fragment() {
 
     private var _binding: FragmentCityListBinding? = null
@@ -47,7 +48,6 @@ class CityListFragment : Fragment() {
         binding.cityList.addItemDecoration(
             CityStickyLabelDecoration(
                 resources.getDimensionPixelSize(R.dimen.medium_text_size),
-                resources.getDimensionPixelSize(R.dimen.vertical_margin),
                 resources.getDimensionPixelSize(R.dimen.label_width)
             )
         )

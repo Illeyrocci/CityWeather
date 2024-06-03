@@ -4,12 +4,12 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 class CityStickyLabelDecoration(
     private val labelTextSize: Int,
-    private val verticalMargin: Int,
     private val labelWidth: Int
 ) : RecyclerView.ItemDecoration() {
 
@@ -33,6 +33,7 @@ class CityStickyLabelDecoration(
                 val paint = Paint()
                 paint.color = Color.BLACK
                 paint.textSize = labelTextSize.toFloat()
+                paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
                 val textBounds = Rect()
                 paint.getTextBounds(firstLetterOfThisCity.toString(), 0, 1, textBounds)
                 val textWidth = textBounds.right - textBounds.left
@@ -40,7 +41,7 @@ class CityStickyLabelDecoration(
                 val x = child.left / 2 - textWidth / 2
                 val y = if (firstLetterOfThisCity == firstLetterOfTopCity) {
                     if (firstLetterOfNextCity == firstLetterOfTopCity) {
-                        (child.bottom - child.top) / 2 + halfTextHeight + verticalMargin
+                        (child.bottom - child.top) / 2 + halfTextHeight
                     } else {
                         (child.bottom + child.top) / 2 + halfTextHeight
                     }
@@ -65,9 +66,6 @@ class CityStickyLabelDecoration(
         super.getItemOffsets(outRect, view, parent, state)
 
         val pxsLeft = labelWidth
-        val pxsVertical = verticalMargin
         outRect.left += pxsLeft
-        outRect.bottom += pxsVertical
-        outRect.top += pxsVertical
     }
 }
