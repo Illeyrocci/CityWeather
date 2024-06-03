@@ -1,22 +1,23 @@
-package com.illeyrocci.cityweather.data.remote.ktor
+package com.illeyrocci.cityweather.data.remote
 
+import com.illeyrocci.cityweather.common.Constants.RELATIVE_PATH_FOR_CITIES
 import com.illeyrocci.cityweather.data.remote.dto.CityResponse
+import com.illeyrocci.cityweather.data.remote.ktor.RemoteCityDataSource
 import com.illeyrocci.cityweather.data.remote.ktor.ktor.getJson
-import com.illeyrocci.cityweather.data.remote.relativePathForCities
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readText
 import kotlinx.serialization.builtins.ListSerializer
 
-class RemoteDataSourceImpl(
+class RemoteCityDataSourceImpl(
     private val client: HttpClient
-) : RemoteDataSource {
+) : RemoteCityDataSource {
 
     override suspend fun getCities(): List<CityResponse> {
         val httpRequest = client.get<HttpStatement> {
             url {
-                path(relativePathForCities)
+                path(RELATIVE_PATH_FOR_CITIES)
             }
         }
 

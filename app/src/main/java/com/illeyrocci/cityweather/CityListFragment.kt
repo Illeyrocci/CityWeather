@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.illeyrocci.cityweather.data.remote.ktor.RemoteDataSourceImpl
-import com.illeyrocci.cityweather.data.remote.ktor.ktor.getHttpClient
+import com.illeyrocci.cityweather.data.repository.CityRepositoryImpl
 import com.illeyrocci.cityweather.databinding.FragmentCityListBinding
+import com.illeyrocci.cityweather.domain.usecase.GetCitiesUseCase
 import kotlinx.coroutines.runBlocking
 
 class CityListFragment : Fragment() {
@@ -46,7 +46,7 @@ class CityListFragment : Fragment() {
 
         runBlocking {
             adapter.update(
-                RemoteDataSourceImpl(getHttpClient()).getCities().map { if (it.city == "") "Unknown" else it.city }.sorted()
+                GetCitiesUseCase(CityRepositoryImpl()).invoke().data!!.map { it.name }
             )
         }
     }
