@@ -26,26 +26,17 @@ class CityListViewModel(
 
     fun getCities() {
         viewModelScope.launch(Dispatchers.IO) {
+            _uiState.value = CityListUiState(isLoading = true)
             val result = getCitiesUseCase()
             _uiState.value = when (result) {
                 is Resource.Success -> {
                     CityListUiState(
-                        cities = mapCityListToSortedCityListItemList(
-                            result.data ?: emptyList()
-                        )
+                        cities = mapCityListToSortedCityListItemList(result.data!!)
                     )
                 }
 
                 is Resource.Error -> {
-                    CityListUiState(
-                        error = result.message
-                    )
-                }
-
-                is Resource.Loading -> {
-                    CityListUiState(
-                        isLoading = true
-                    )
+                    CityListUiState(error = result.message)
                 }
             }
         }
