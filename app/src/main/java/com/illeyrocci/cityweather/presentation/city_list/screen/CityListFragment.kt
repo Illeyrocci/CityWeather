@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,6 +14,7 @@ import com.illeyrocci.cityweather.R
 import com.illeyrocci.cityweather.databinding.FragmentCityListBinding
 import com.illeyrocci.cityweather.presentation.city_list.components.CityAdapter
 import com.illeyrocci.cityweather.presentation.city_list.components.CityStickyLabelDecoration
+import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListUiState
 import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListVMFactory
 import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -44,21 +46,38 @@ class CityListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.cityList.adapter = adapter
-        binding.cityList.addItemDecoration(
-            CityStickyLabelDecoration(
-                resources.getDimensionPixelSize(R.dimen.medium_text_size),
-                resources.getDimensionPixelSize(R.dimen.label_width)
+        binding.apply {
+            cityList.adapter = adapter
+            cityList.addItemDecoration(
+                CityStickyLabelDecoration(
+                    resources.getDimensionPixelSize(R.dimen.medium_text_size),
+                    resources.getDimensionPixelSize(R.dimen.label_width)
+                )
             )
-        )
+            buttonUpdate.setOnClickListener {
+                viewModel.getCities()
+            }
+        }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collectLatest { uiState ->
+
                     adapter.update(uiState.cities)
+
+                    with(binding) {
+                        toggleVisibility(uiState)
+                        if (!uiState.error.isNullOrBlank()) textError.text = uiState.error
+                    }
                 }
             }
         }
+    }
+
+    private fun FragmentCityListBinding.toggleVisibility(uiState: CityListUiState) {
+        errorStub.isVisible = !uiState.error.isNullOrBlank()
+        progressCircle.isVisible = uiState.isLoading
+        cityList.isVisible = uiState.cities.isNotEmpty()
     }
 
     override fun onDestroyView() {

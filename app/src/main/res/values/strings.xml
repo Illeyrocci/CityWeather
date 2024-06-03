@@ -2,5 +2,4 @@
     <string name="app_name">CityWeather</string>
     <string name="temperature">%1$d\u2103</string>
     <string name="update">Обновить</string>
-    <string name="error_oсcurred">Произошла ошибка</string>
 </resources>

@@ -7,6 +7,7 @@ import com.illeyrocci.cityweather.domain.usecase.GetCitiesUseCase
 
 class CityListVMFactory : ViewModelProvider.Factory {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CityListViewModel::class.java)) {
             return CityListViewModel(

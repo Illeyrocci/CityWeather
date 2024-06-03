@@ -24,7 +24,7 @@ class CityListViewModel(
         getCities()
     }
 
-    private fun getCities() {
+    fun getCities() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = getCitiesUseCase()
             _uiState.value = when (result) {
@@ -36,8 +36,16 @@ class CityListViewModel(
                     )
                 }
 
-                else -> {
-                    TODO()
+                is Resource.Error -> {
+                    CityListUiState(
+                        error = result.message
+                    )
+                }
+
+                is Resource.Loading -> {
+                    CityListUiState(
+                        isLoading = true
+                    )
                 }
             }
         }
