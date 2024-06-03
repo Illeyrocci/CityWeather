@@ -5,10 +5,12 @@ buildscript {
     }
     dependencies {
         classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+        classpath(libs.kotlin.serialization.json)
     }
 }
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.safeargs.plugin) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.illeyrocci.cityweather.databinding.FragmentCityListBinding
+import kotlinx.coroutines.runBlocking
 
 class CityListFragment : Fragment() {
 
@@ -40,9 +41,12 @@ class CityListFragment : Fragment() {
                 resources.getDimensionPixelSize(R.dimen.label_width)
             )
         )
-        adapter.update(listOf("Moscow", "Minks", "Moldovanka", "Malinovka", "Vladimir", "Kursk",
-            "Kiev", "Chernigov", "Cheta", "Ufa", "Uhta", "Urupinsk", "Petrozavodsk", "Petrop-kam",
-            "Pilates", "Pills", "Pirates", "Ivolga", "Igla", "Izhinsk", "Indigo"))
+
+        runBlocking {
+            adapter.update(
+                RemoteDataSourceImpl(getHttpClient()).getCities().map { if (it.city == "") "Unknown" else it.city }.sorted()
+            )
+        }
     }
 
     override fun onDestroyView() {

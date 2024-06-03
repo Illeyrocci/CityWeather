@@ -36,7 +36,7 @@ class CityStickyLabelDecoration(
                 val textBounds = Rect()
                 paint.getTextBounds(firstLetterOfThisCity.toString(), 0, 1, textBounds)
                 val textWidth = textBounds.right - textBounds.left
-                val halfTextHeight = textBounds.bottom - textBounds.top / 2
+                val halfTextHeight = (textBounds.bottom - textBounds.top) / 2
                 val x = child.left / 2 - textWidth / 2
                 val y = if (firstLetterOfThisCity == firstLetterOfTopCity) {
                     if (firstLetterOfNextCity == firstLetterOfTopCity) {
@@ -66,8 +66,8 @@ class CityStickyLabelDecoration(
 
         val pxsLeft = labelWidth
         val pxsVertical = verticalMargin
-        outRect.left += pxsLeft.toInt()
-        outRect.bottom += pxsVertical.toInt()
-        outRect.top += pxsVertical.toInt()
+        outRect.left += pxsLeft
+        outRect.bottom += pxsVertical
+        outRect.top += pxsVertical
     }
 }
