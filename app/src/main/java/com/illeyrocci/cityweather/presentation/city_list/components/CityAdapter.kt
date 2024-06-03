@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illeyrocci.cityweather.databinding.ViewCityItemBinding
+import com.illeyrocci.cityweather.domain.model.City
 
 class CityAdapter(
-    private val onCityClicked: () -> Unit
+    private val onCityClicked: (Int) -> Unit
 ) : RecyclerView.Adapter<CityListItemViewHolder>() {
 
-    private var data: List<CityListItem> = listOf()
+    private var data: List<City> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityListItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -24,10 +25,10 @@ class CityAdapter(
         holder.bind(item, onCityClicked)
     }
 
-    fun update(results: List<CityListItem>) {
+    fun update(results: List<City>) {
         data = results
         notifyDataSetChanged()
     }
 
-    fun cityNameAt(index: Int) = data[index].cityName
+    fun cityNameAt(index: Int) = data[index].name
 }

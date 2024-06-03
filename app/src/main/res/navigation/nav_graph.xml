@@ -8,7 +8,7 @@
         android:id="@+id/city_list_fragment"
         android:name="com.illeyrocci.cityweather.presentation.city_list.screen.CityListFragment"
         android:label="City list"
-        tools:layout="@layout/fragment_city_list" >
+        tools:layout="@layout/fragment_city_list">
         <action
             android:id="@+id/list_to_weather"
             app:destination="@id/weatherFragment" />
@@ -17,5 +17,18 @@
         android:id="@+id/weatherFragment"
         android:name="com.illeyrocci.cityweather.presentation.weather.screen.WeatherFragment"
         android:label="Weather"
-        tools:layout="@layout/fragment_weather" />
+        tools:layout="@layout/fragment_weather">
+
+        <argument
+            android:name="cityName"
+            app:argType="string" />
+
+        <argument
+            android:name="cityLatitude"
+            app:argType="string" />
+
+        <argument
+            android:name="cityLongitude"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -20,17 +20,14 @@ class WeatherViewModel(
     val uiState: StateFlow<WeatherUiState>
         get() = _uiState.asStateFlow()
 
-    init {
-        getTemperature()
-    }
-
-    fun getTemperature() {
+    fun getTemperatureForCity(cityName: String, latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = WeatherUiState(isLoading = true)
-            val result: Resource<Weather> = getWeatherUseCase()
+            val result: Resource<Weather> = getWeatherUseCase(latitude, longitude)
             _uiState.value = when (result) {
                 is Resource.Success -> {
                     WeatherUiState(
+                        cityName = cityName,
                         temperature = mapWeatherToInteger(result.data!!)
                     )
                 }

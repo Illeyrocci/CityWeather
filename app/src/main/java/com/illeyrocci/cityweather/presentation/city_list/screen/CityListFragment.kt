@@ -38,8 +38,15 @@ class CityListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        adapter = CityAdapter {
-            findNavController().navigate(CityListFragmentDirections.listToWeather())
+        adapter = CityAdapter { position ->
+            val city = viewModel.getCityAt(position)
+            findNavController().navigate(
+                CityListFragmentDirections.listToWeather(
+                    city.name,
+                    city.latitude.toString(),
+                    city.longitude.toString()
+                )
+            )
         }
         _binding = FragmentCityListBinding.inflate(layoutInflater, container, false)
         return binding.root

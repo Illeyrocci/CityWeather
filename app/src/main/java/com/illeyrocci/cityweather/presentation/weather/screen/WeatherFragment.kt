@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import com.illeyrocci.cityweather.R
 import com.illeyrocci.cityweather.databinding.FragmentWeatherBinding
 import com.illeyrocci.cityweather.presentation.weather.viewmodel.WeatherUiState
@@ -28,6 +29,17 @@ class WeatherFragment : Fragment() {
 
     private val viewModel: WeatherViewModel by viewModels { WeatherVMFactory() }
 
+    private val args: WeatherFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getTemperatureForCity(
+            args.cityName,
+            args.cityLatitude.toDouble(),
+            args.cityLongitude.toDouble()
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,7 +54,11 @@ class WeatherFragment : Fragment() {
 
         binding.apply {
             buttonUpdate.setOnClickListener {
-                viewModel.getTemperature()
+                viewModel.getTemperatureForCity(
+                    args.cityName,
+                    args.cityLatitude.toDouble(),
+                    args.cityLongitude.toDouble()
+                )
             }
         }
 
@@ -53,6 +69,7 @@ class WeatherFragment : Fragment() {
                     with(binding) {
                         toggleVisibility(uiState)
                         textCelsius.text = getString(R.string.temperature, uiState.temperature)
+                        textCity.text = uiState.cityName
                         if (!uiState.error.isNullOrBlank()) textError.text = uiState.error
                     }
                 }
@@ -64,7 +81,7 @@ class WeatherFragment : Fragment() {
         textError.isVisible = !uiState.error.isNullOrBlank()
         progressCircle.isVisible = uiState.isLoading
         textCelsius.isVisible = uiState.temperature != null
-        textCity.isVisible = uiState.temperature != null
+        textCity.isVisible = uiState.cityName != null
     }
 
     override fun onDestroyView() {

@@ -7,5 +7,5 @@ interface RemoteCityDataSource {
 
     suspend fun getCities(): List<CityResponse>
 
-    suspend fun getWeather(): WeatherResponse
+    suspend fun getWeather(latitude: Double, longitude: Double): WeatherResponse
 }

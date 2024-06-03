@@ -4,5 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeatherResponse (
-    val temp: Double
-)
+    val main: Main
+) {
+    @Serializable
+    data class Main(
+        val temp: Double
+    )
+}

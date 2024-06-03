@@ -6,7 +6,7 @@ import com.illeyrocci.cityweather.domain.model.Weather
 
 interface CityRepository {
 
-    suspend fun getCities(): Resource<List<City>>
+    suspend fun getCitiesSortedByName(): Resource<List<City>>
 
-    suspend fun getWeather(): Resource<Weather>
+    suspend fun getWeather(latitude: Double, longitude: Double): Resource<Weather>
 }

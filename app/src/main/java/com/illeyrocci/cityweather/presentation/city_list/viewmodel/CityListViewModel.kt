@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.illeyrocci.cityweather.common.Resource
 import com.illeyrocci.cityweather.domain.model.City
-import com.illeyrocci.cityweather.domain.usecase.GetCitiesUseCase
-import com.illeyrocci.cityweather.presentation.city_list.components.CityListItem
+import com.illeyrocci.cityweather.domain.usecase.GetCitiesSortedByNameUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CityListViewModel(
-    private val getCitiesUseCase: GetCitiesUseCase
+    private val getCitiesSortedByNameUseCase: GetCitiesSortedByNameUseCase
 ) : ViewModel() {
     private val _uiState =
         MutableStateFlow(CityListUiState())
@@ -27,11 +26,11 @@ class CityListViewModel(
     fun getCities() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = CityListUiState(isLoading = true)
-            val result = getCitiesUseCase()
+            val result = getCitiesSortedByNameUseCase()
             _uiState.value = when (result) {
                 is Resource.Success -> {
                     CityListUiState(
-                        cities = mapCityListToSortedCityListItemList(result.data!!)
+                        cities = result.data!!
                     )
                 }
 
@@ -42,6 +41,5 @@ class CityListViewModel(
         }
     }
 
-    private fun mapCityListToSortedCityListItemList(cityList: List<City>) =
-        cityList.map { CityListItem(it.name) }.sortedBy { it.cityName }
+    fun getCityAt(position: Int): City = uiState.value.cities[position]
 }

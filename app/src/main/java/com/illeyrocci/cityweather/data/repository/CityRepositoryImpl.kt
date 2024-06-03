@@ -11,11 +11,12 @@ class CityRepositoryImpl : CityRepository, BaseKtorRepository() {
     private val remoteCityDataSource: RemoteCityDataSource =
         RemoteCityDataSourceImpl(getHttpClient())
     private val cityMapper = CityMapper()
-    override suspend fun getCities() = doWebRequest {
+    override suspend fun getCitiesSortedByName() = doWebRequest {
         cityMapper.mapCityResponseListToCities(remoteCityDataSource.getCities())
+            .sortedBy { it.name }
     }
 
-    override suspend fun getWeather() = doWebRequest {
-        cityMapper.mapWeatherResponseToWeather(remoteCityDataSource.getWeather())
+    override suspend fun getWeather(latitude: Double, longitude: Double) = doWebRequest {
+        cityMapper.mapWeatherResponseToWeather(remoteCityDataSource.getWeather(latitude, longitude))
     }
 }

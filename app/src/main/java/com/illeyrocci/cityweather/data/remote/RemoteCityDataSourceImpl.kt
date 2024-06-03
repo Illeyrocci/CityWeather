@@ -1,5 +1,6 @@
 package com.illeyrocci.cityweather.data.remote
 
+import com.illeyrocci.cityweather.common.Constants.OPENWEATHERMAP_API_KEY
 import com.illeyrocci.cityweather.common.Constants.CITY_HOST
 import com.illeyrocci.cityweather.common.Constants.RELATIVE_PATH_FOR_CITIES
 import com.illeyrocci.cityweather.common.Constants.RELATIVE_PATH_FOR_WEATHER
@@ -11,6 +12,8 @@ import com.illeyrocci.cityweather.data.remote.ktor.ktor.getJson
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.host
+import io.ktor.client.request.parameter
+import io.ktor.client.request.url
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readText
 import kotlinx.serialization.builtins.ListSerializer
@@ -22,9 +25,7 @@ class RemoteCityDataSourceImpl(
     override suspend fun getCities(): List<CityResponse> {
         val httpRequest = client.get<HttpStatement> {
             host = CITY_HOST
-            url {
-                path(RELATIVE_PATH_FOR_CITIES)
-            }
+            url(RELATIVE_PATH_FOR_CITIES)
         }
 
         return getJson().decodeFromString(
@@ -33,12 +34,13 @@ class RemoteCityDataSourceImpl(
         )
     }
 
-    override suspend fun getWeather(): WeatherResponse {
+    override suspend fun getWeather(latitude: Double, longitude: Double): WeatherResponse {
         val httpRequest = client.get<HttpStatement> {
             host = WEATHER_HOST
-            url {
-                path(RELATIVE_PATH_FOR_WEATHER)
-            }
+            url(RELATIVE_PATH_FOR_WEATHER)
+            parameter("appid", OPENWEATHERMAP_API_KEY)
+            parameter("lon", longitude)
+            parameter("lat", latitude)
         }
 
         return getJson().decodeFromString(
