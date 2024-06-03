@@ -22,7 +22,7 @@ abstract class BaseKtorRepository {
                 "Ошибка сервера\n(${e.response.status.description})"
             )
         } catch (e: Exception) {
-            val message = e.localizedMessage.let {
+            val message = e.message.let {
                 if (it != null && it.startsWith("Unable to resolve host", true)) {
                    ". Проверьте подключение\n($it)"
                 } else "\n($it)"

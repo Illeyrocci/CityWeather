@@ -14,4 +14,8 @@ class CityRepositoryImpl : CityRepository, BaseKtorRepository() {
     override suspend fun getCities() = doWebRequest {
         cityMapper.mapCityResponseListToCities(remoteCityDataSource.getCities())
     }
+
+    override suspend fun getWeather() = doWebRequest {
+        cityMapper.mapWeatherResponseToWeather(remoteCityDataSource.getWeather())
+    }
 }

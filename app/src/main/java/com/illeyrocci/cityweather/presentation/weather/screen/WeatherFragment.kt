@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.illeyrocci.cityweather.R
 import com.illeyrocci.cityweather.databinding.FragmentWeatherBinding
 import com.illeyrocci.cityweather.presentation.weather.viewmodel.WeatherUiState
 import com.illeyrocci.cityweather.presentation.weather.viewmodel.WeatherVMFactory
@@ -51,6 +52,7 @@ class WeatherFragment : Fragment() {
 
                     with(binding) {
                         toggleVisibility(uiState)
+                        textCelsius.text = getString(R.string.temperature, uiState.temperature)
                         if (!uiState.error.isNullOrBlank()) textError.text = uiState.error
                     }
                 }

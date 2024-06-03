@@ -3,15 +3,17 @@ package com.illeyrocci.cityweather.presentation.weather.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.illeyrocci.cityweather.common.Resource
-import com.illeyrocci.cityweather.domain.usecase.GetCitiesUseCase
+import com.illeyrocci.cityweather.domain.model.Weather
+import com.illeyrocci.cityweather.domain.usecase.GetWeatherUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class WeatherViewModel(
-    private val getCitiesUseCase: GetCitiesUseCase
+    private val getWeatherUseCase: GetWeatherUseCase
 ) : ViewModel() {
     private val _uiState =
         MutableStateFlow(WeatherUiState())
@@ -25,11 +27,11 @@ class WeatherViewModel(
     fun getTemperature() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = WeatherUiState(isLoading = true)
-            val result: Resource<Int> = Resource.Success(data = 32)//getCitiesUseCase()
+            val result: Resource<Weather> = getWeatherUseCase()
             _uiState.value = when (result) {
                 is Resource.Success -> {
                     WeatherUiState(
-                        temperature = result.data!!
+                        temperature = mapWeatherToInteger(result.data!!)
                     )
                 }
 
@@ -39,4 +41,6 @@ class WeatherViewModel(
             }
         }
     }
+
+    private fun mapWeatherToInteger(weather: Weather) = weather.temp.roundToInt()
 }

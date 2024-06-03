@@ -3,7 +3,7 @@ package com.illeyrocci.cityweather.presentation.weather.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.illeyrocci.cityweather.data.repository.CityRepositoryImpl
-import com.illeyrocci.cityweather.domain.usecase.GetCitiesUseCase
+import com.illeyrocci.cityweather.domain.usecase.GetWeatherUseCase
 
 class WeatherVMFactory  : ViewModelProvider.Factory {
 
@@ -11,7 +11,7 @@ class WeatherVMFactory  : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
             return WeatherViewModel(
-                GetCitiesUseCase(CityRepositoryImpl())
+                GetWeatherUseCase(CityRepositoryImpl())
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
