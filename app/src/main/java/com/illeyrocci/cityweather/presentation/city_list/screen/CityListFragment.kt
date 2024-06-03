@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.illeyrocci.cityweather.R
 import com.illeyrocci.cityweather.databinding.FragmentCityListBinding
 import com.illeyrocci.cityweather.presentation.city_list.components.CityAdapter
@@ -19,7 +20,6 @@ import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListVMFac
 import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 
 class CityListFragment : Fragment() {
 
@@ -38,7 +38,9 @@ class CityListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        adapter = CityAdapter()
+        adapter = CityAdapter {
+            findNavController().navigate(CityListFragmentDirections.listToWeather())
+        }
         _binding = FragmentCityListBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

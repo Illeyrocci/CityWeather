@@ -8,10 +8,12 @@ class CityListItemViewHolder(private val binding: ViewCityItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
-        cityListItem: CityListItem
+        cityListItem: CityListItem,
+        onCityClicked: () -> Unit
     ) {
-        with(binding.cityName) {
-            text = cityListItem.cityName
+        with(binding) {
+            cityName.text = cityListItem.cityName
+            root.setOnClickListener { onCityClicked() }
         }
     }
 }

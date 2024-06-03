@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illeyrocci.cityweather.databinding.ViewCityItemBinding
 
-class CityAdapter: RecyclerView.Adapter<CityListItemViewHolder>() {
+class CityAdapter(
+    private val onCityClicked: () -> Unit
+) : RecyclerView.Adapter<CityListItemViewHolder>() {
 
     private var data: List<CityListItem> = listOf()
 
@@ -19,7 +21,7 @@ class CityAdapter: RecyclerView.Adapter<CityListItemViewHolder>() {
 
     override fun onBindViewHolder(holder: CityListItemViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item, onCityClicked)
     }
 
     fun update(results: List<CityListItem>) {
