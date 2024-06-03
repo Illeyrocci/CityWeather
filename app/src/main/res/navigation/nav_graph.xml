@@ -6,7 +6,7 @@
     app:startDestination="@id/city_list_fragment">
     <fragment
         android:id="@+id/city_list_fragment"
-        android:name="com.illeyrocci.cityweather.CityListFragment"
+        android:name="com.illeyrocci.cityweather.presentation.city_list.screen.CityListFragment"
         android:label="City list"
         tools:layout="@layout/fragment_city_list">
     </fragment>

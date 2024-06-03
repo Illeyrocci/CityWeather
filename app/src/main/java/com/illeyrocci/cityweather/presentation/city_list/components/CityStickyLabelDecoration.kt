@@ -1,4 +1,4 @@
-package com.illeyrocci.cityweather
+package com.illeyrocci.cityweather.presentation.city_list.components
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -23,11 +23,11 @@ class CityStickyLabelDecoration(
 
             val child = parent.getChildAt(i)
             val adapterPosition = parent.getChildAdapterPosition(child)
-            val firstLetterOfThisCity = adapter.cityAt(adapterPosition).first()
+            val firstLetterOfThisCity = adapter.cityNameAt(adapterPosition).first()
             val firstLetterOfTopCity =
-                adapter.cityAt(parent.getChildAdapterPosition(parent.getChildAt(0))).first()
+                adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(0))).first()
             val firstLetterOfNextCity =
-                adapter.cityAt(parent.getChildAdapterPosition(parent.getChildAt(1))).first()
+                adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(1))).first()
 
             if (firstLetterOfGroup == null || firstLetterOfGroup != firstLetterOfThisCity) {
                 val paint = Paint()
