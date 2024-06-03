@@ -13,7 +13,7 @@ class CityRepositoryImpl : CityRepository, BaseKtorRepository() {
     private val cityMapper = CityMapper()
     override suspend fun getCitiesSortedByName() = doWebRequest {
         cityMapper.mapCityResponseListToCities(remoteCityDataSource.getCities())
-            .sortedBy { it.name }
+            .filter { !it.name.isNullOrBlank() }.sortedBy { it.name }
     }
 
     override suspend fun getWeather(latitude: Double, longitude: Double) = doWebRequest {

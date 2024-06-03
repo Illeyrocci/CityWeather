@@ -42,7 +42,7 @@ class CityListFragment : Fragment() {
             val city = viewModel.getCityAt(position)
             findNavController().navigate(
                 CityListFragmentDirections.listToWeather(
-                    city.name,
+                    city.name!!,
                     city.latitude.toString(),
                     city.longitude.toString()
                 )

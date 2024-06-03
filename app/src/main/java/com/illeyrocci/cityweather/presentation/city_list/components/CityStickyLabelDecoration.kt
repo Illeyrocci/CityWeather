@@ -23,11 +23,11 @@ class CityStickyLabelDecoration(
 
             val child = parent.getChildAt(i)
             val adapterPosition = parent.getChildAdapterPosition(child)
-            val firstLetterOfThisCity = adapter.cityNameAt(adapterPosition).first()
+            val firstLetterOfThisCity = adapter.cityNameAt(adapterPosition)!!.first()
             val firstLetterOfTopCity =
-                adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(0))).first()
+                adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(0)))!!.first()
             val firstLetterOfNextCity =
-                adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(1))).first()
+                adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(1)))!!.first()
 
             if (firstLetterOfGroup == null || firstLetterOfGroup != firstLetterOfThisCity) {
                 val paint = Paint()

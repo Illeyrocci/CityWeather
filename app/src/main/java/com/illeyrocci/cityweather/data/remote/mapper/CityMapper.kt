@@ -6,11 +6,12 @@ import com.illeyrocci.cityweather.domain.model.City
 import com.illeyrocci.cityweather.domain.model.Weather
 
 class CityMapper {
-    private fun mapCityResponseToCity(cityResponse: CityResponse): City =
-        City(cityResponse.city, cityResponse.latitude, cityResponse.longitude)
+    private fun mapCityResponseToCity(cityResponse: CityResponse): City = with(cityResponse) {
+        City(if (id.isBlank()) null else id.toInt(), city.ifBlank { null }, latitude, longitude)
+    }
 
     fun mapCityResponseListToCities(cityResponseList: List<CityResponse>): List<City> =
-        cityResponseList.filter { it.city != "" }.map { mapCityResponseToCity(it) }
+        cityResponseList.map { mapCityResponseToCity(it) }
 
     fun mapWeatherResponseToWeather(weatherResponse: WeatherResponse): Weather =
         Weather(weatherResponse.main.temp)

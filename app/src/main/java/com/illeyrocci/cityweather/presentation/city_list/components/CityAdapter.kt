@@ -2,6 +2,7 @@ package com.illeyrocci.cityweather.presentation.city_list.components
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.illeyrocci.cityweather.databinding.ViewCityItemBinding
 import com.illeyrocci.cityweather.domain.model.City
@@ -25,9 +26,11 @@ class CityAdapter(
         holder.bind(item, onCityClicked)
     }
 
-    fun update(results: List<City>) {
-        data = results
-        notifyDataSetChanged()
+    fun update(updatedList: List<City>) {
+        val diffCallback = CityListComparator(data, updatedList)
+        val diff = DiffUtil.calculateDiff(diffCallback)
+        data = updatedList
+        diff.dispatchUpdatesTo(this)
     }
 
     fun cityNameAt(index: Int) = data[index].name
