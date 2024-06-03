@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.illeyrocci.cityweather.data.remote.ktor.RemoteDataSourceImpl
+import com.illeyrocci.cityweather.data.remote.ktor.ktor.getHttpClient
 import com.illeyrocci.cityweather.databinding.FragmentCityListBinding
 import kotlinx.coroutines.runBlocking
 

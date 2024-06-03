@@ -1,4 +1,4 @@
-package com.illeyrocci.cityweather
+package com.illeyrocci.cityweather.data.remote.ktor.ktor
 
 import io.ktor.client.HttpClient
 import io.ktor.client.features.defaultRequest
