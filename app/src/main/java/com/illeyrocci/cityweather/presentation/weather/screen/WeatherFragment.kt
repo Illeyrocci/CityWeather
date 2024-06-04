@@ -14,11 +14,12 @@ import androidx.navigation.fragment.navArgs
 import com.illeyrocci.cityweather.R
 import com.illeyrocci.cityweather.databinding.FragmentWeatherBinding
 import com.illeyrocci.cityweather.presentation.weather.viewmodel.WeatherUiState
-import com.illeyrocci.cityweather.presentation.weather.viewmodel.WeatherVMFactory
 import com.illeyrocci.cityweather.presentation.weather.viewmodel.WeatherViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
     private var _binding: FragmentWeatherBinding? = null
@@ -27,7 +28,7 @@ class WeatherFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
-    private val viewModel: WeatherViewModel by viewModels { WeatherVMFactory() }
+    private val viewModel: WeatherViewModel by viewModels()
 
     private val args: WeatherFragmentArgs by navArgs()
 

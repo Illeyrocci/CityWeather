@@ -8,7 +8,6 @@ import com.illeyrocci.cityweather.common.Constants.WEATHER_HOST
 import com.illeyrocci.cityweather.data.remote.dto.CityResponse
 import com.illeyrocci.cityweather.data.remote.dto.WeatherResponse
 import com.illeyrocci.cityweather.data.remote.ktor.RemoteCityDataSource
-import com.illeyrocci.cityweather.data.remote.ktor.ktor.getJson
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.host
@@ -17,9 +16,12 @@ import io.ktor.client.request.url
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readText
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class RemoteCityDataSourceImpl(
-    private val client: HttpClient
+class RemoteCityDataSourceImpl @Inject constructor(
+    private val client: HttpClient,
+    private val json: Json
 ) : RemoteCityDataSource {
 
     override suspend fun getCities(): List<CityResponse> {
@@ -28,7 +30,7 @@ class RemoteCityDataSourceImpl(
             url(RELATIVE_PATH_FOR_CITIES)
         }
 
-        return getJson().decodeFromString(
+        return json.decodeFromString(
             ListSerializer(CityResponse.serializer()),
             httpRequest.execute().readText()
         )
@@ -43,7 +45,7 @@ class RemoteCityDataSourceImpl(
             parameter("lat", latitude)
         }
 
-        return getJson().decodeFromString(
+        return json.decodeFromString(
             WeatherResponse.serializer(),
             httpRequest.execute().readText()
         )

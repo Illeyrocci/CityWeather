@@ -16,11 +16,12 @@ import com.illeyrocci.cityweather.databinding.FragmentCityListBinding
 import com.illeyrocci.cityweather.presentation.city_list.components.CityAdapter
 import com.illeyrocci.cityweather.presentation.city_list.components.CityStickyLabelDecoration
 import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListUiState
-import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListVMFactory
 import com.illeyrocci.cityweather.presentation.city_list.viewmodel.CityListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class CityListFragment : Fragment() {
 
     private var _binding: FragmentCityListBinding? = null
@@ -29,7 +30,7 @@ class CityListFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
-    private val viewModel: CityListViewModel by viewModels { CityListVMFactory() }
+    private val viewModel: CityListViewModel by viewModels()
 
     private lateinit var adapter: CityAdapter
 

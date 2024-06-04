@@ -5,14 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.illeyrocci.cityweather.common.Resource
 import com.illeyrocci.cityweather.domain.model.Weather
 import com.illeyrocci.cityweather.domain.usecase.GetWeatherUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
-class WeatherViewModel(
+@HiltViewModel
+class WeatherViewModel @Inject constructor(
     private val getWeatherUseCase: GetWeatherUseCase
 ) : ViewModel() {
     private val _uiState =
