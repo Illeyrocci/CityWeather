@@ -26,7 +26,7 @@ class CityStickyLabelDecoration(
             val firstLetterOfThisCity = adapter.cityNameAt(adapterPosition)!!.first()
             val firstLetterOfTopCity =
                 adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(0)))!!.first()
-            val firstLetterOfNextCity =
+            val firstLetterOfNextTopCity = if (parent.childCount == 1) null else
                 adapter.cityNameAt(parent.getChildAdapterPosition(parent.getChildAt(1)))!!.first()
 
             if (firstLetterOfGroup == null || firstLetterOfGroup != firstLetterOfThisCity) {
@@ -37,15 +37,11 @@ class CityStickyLabelDecoration(
                 val textBounds = Rect()
                 paint.getTextBounds(firstLetterOfThisCity.toString(), 0, 1, textBounds)
                 val textWidth = textBounds.right - textBounds.left
-                val halfTextHeight = (textBounds.bottom - textBounds.top) / 2
-                val x = child.left / 2 - textWidth / 2
-                val y = if (firstLetterOfThisCity == firstLetterOfTopCity) {
-                    if (firstLetterOfNextCity == firstLetterOfTopCity) {
-                        (child.bottom - child.top) / 2 + halfTextHeight
-                    } else {
-                        (child.bottom + child.top) / 2 + halfTextHeight
-                    }
-                } else (child.bottom + child.top) / 2 + halfTextHeight
+                val textHeight = textBounds.bottom - textBounds.top
+                val x = (child.left - textWidth) / 2
+                val y = (child.bottom + textHeight
+                        + child.top * if (firstLetterOfThisCity == firstLetterOfTopCity
+                    && firstLetterOfThisCity == firstLetterOfNextTopCity) -1 else 1) / 2
                 c.drawText(
                     firstLetterOfThisCity.toString(),
                     x.toFloat(),
@@ -65,7 +61,6 @@ class CityStickyLabelDecoration(
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        val pxsLeft = labelWidth
-        outRect.left += pxsLeft
+        outRect.left += labelWidth
     }
 }
